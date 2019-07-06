@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Parameters TestSystem="Passive" TestMode="Gain" Locked="False">
+	<Instrument Header = "Instrument" DisplayStyle="ComboBox" ComboItem="Emulator,Agilent_5071C" Value = "Emulator"/>
+	<Test_Setup Header="Test Setup" Expert="True">
+		<Trace_Name DisplayStyle="ComboBox" GpibCMD="" Header="Trace Name" ComboItem="S21,S11" Value="S21" Unit="" Regex="" Level="2" Tip="暂时只开发S21"/>
+		<IF_Bandwidth DisplayStyle="TextBox" GpibCMD="" Header="IF Bandwidth" Value="0.3" Unit="KHz" Level="1"/>
+		<Factor_Average Level="2" DisplayStyle="TextBox" GpibCMD="" Header="Factor Average" Value="0" Tip="Average number of times, the requirement is a positive integer" />
+		<Power Level="1" Header="Power" Value="5" DisplayStyle="TextBox" Unit="dB" Regex="" ComboItem="" Tip="Transmit power" />
+		<Test_Mode Level="2" DisplayStyle="ComboBox" GpibCMD="" Header="Test Mode" Tip ="" ComboItem="Log/Phase,Real/Imag,Log" Value="Log" Unit="" Regex=""/>
+		<SkipCalibration Level="2" DisplayStyle="ComboBox" GpibCMD="" Header="Skip Calibration" ComboItem="True,False" Value="False" Unit="" Regex="" Tip="Whether to skip calibration" />
+	</Test_Setup>
+	<Angular_Coordinator_Setup Header="Angular Coordinator Setup" Expert="True">
+		<Theta Header="Theta" Expert="True" Tip="AntennaNum" >
+			<Theta_Start Level="1" DisplayStyle="NoDisplay" Header="Start" ComboItem="0,30,60,90,120,150,180" Value="0" Regex="^[1-9]\d*|0$" Tip="非负整数" />
+			<Theta_Stop Level="1" DisplayStyle="NoDisplay" Header="End " ComboItem="0,30,60,90,120,150,180,360" Value="360" Regex="^[1-9]\d*|0$" Tip="非负整数" GpibCMD="" Unit="" />
+			<Theta_Step Level="1" DisplayStyle="ComboBox" Header="Step" ComboItem="15,30,60,90,120" Value="30" Regex="^[1-9]\d*|0$" Tip="非负整数" />
+		</Theta>
+		<Phi Header="Phi" Expert="True" Tip="Turntable" >
+			<Phi_Start Level="1" DisplayStyle="ComboBox" Header="Start" ComboItem="0,30,60,90,120,150,180" Value="0" Regex="^[1-9]\d*|0$" Tip="非负整数" GpibCMD="" Unit="" />
+			<Phi_Stop Level="1" DisplayStyle="ComboBox" Header="End" ComboItem="0,30,60,90,120,150,180" Value="360" Regex="^[1-9]\d*|0$" Tip="非负整数" GpibCMD="" Unit="" />
+			<Phi_Step Level="1" Header="Step" Value="15" DisplayStyle="ComboBox" Unit="" Regex="^[1-9]\d*|0$" Tip="非负整数" ComboItem="15,30" />
+		</Phi>
+	</Angular_Coordinator_Setup>
+	<Frequency_List Level="1" Header="Frequency List" Expert="True">
+		<Test_Method DisplayStyle="FrequencyList" GpibCMD="" Header="Test Method" ComboItem="Linear,List Frequency,CW" Value="Linear">
+		<Segm_Freq >
+			<Freq Start="1000" Stop="2000" Step="100" />
+			<Freq Start="3500" Stop="5500" Step="100" />
+		</Segm_Freq>
+		<List_Freq Header ="List Freq">
+			<Freq Value="900" />
+			<Freq Value="1800" />
+			<Freq Value="1900" />
+		</List_Freq>
+		<CW_Freq>
+			<Freq Value="11" />
+		</CW_Freq>
+		</Test_Method>
+	</Frequency_List>
+</Parameters>
