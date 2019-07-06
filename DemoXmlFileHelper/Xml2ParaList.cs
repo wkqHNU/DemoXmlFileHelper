@@ -10,8 +10,7 @@ namespace DemoXmlFileHelper
 {
     public class Xml2ParaList
     {
-        public static Dictionary<string, Parameter<object>> paraList;
-        public static KeyValuePair<string, object> paraList2;
+        public static Dictionary<string, object> ParaList;
         public static string testSystem;
         public static string testMode;
 
@@ -31,14 +30,15 @@ namespace DemoXmlFileHelper
 
                 testSystem = ReadXmlValue<string>(para_nd, "TestSystem");
                 testMode = ReadXmlValue<string>(para_nd, "TestMode");
-                paraList = null;
+                ParaList = null;
+                string key;
+                object value;
                 if (para_nd.HasChildNodes)
                 {
-                    paraList = new Dictionary<string, Parameter<object>>();
-                    Parameter<object> paraFileName = new Parameter<object>();
-                    paraFileName.Name = System.IO.Path.GetFileName(path);//文件名
-                    paraFileName.Value = path;//全路径名
-                    AddPara(paraList, paraFileName.Name, paraFileName);
+                    ParaList = new Dictionary<string, object>();
+                    key = System.IO.Path.GetFileName(path);//文件名
+                    value = path;//全路径名
+                    AddPara(ParaList, key, value);
 
                     ReadXmlNodeStart(para_nd.ChildNodes);
                     Log.PrintLog(LogMsgType.Normal, "Template[" + System.IO.Path.GetFileName(path) + "] load success");
@@ -80,41 +80,41 @@ namespace DemoXmlFileHelper
                     if (minL > maxL)
                     {
                         throw new ParaListException(
-                            string.Format("when judging the {0} variable range, the error appears: min={1} > max={2}",
+                            string.Format("When judging the {0} variable range, the error appears: min={1} > max={2}",
                             valueName, minL, maxL));
                     }
                     if (leftL < 0) // 值小于最小值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
                                 valueName, minL, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                                 valueName, minL, valueName, value));
                     }
                     else if ((openMin && leftL == 0)) // 值等于于最小值，默认不报错，看openMin
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                             valueName, minL, valueName, value));
                     }
                     else if (rightL > 0) // 值大于最大值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxL, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxL, valueName, value));
                     }
                     else if (openMax && rightL == 0) // 值等于于最大值，默认不报错，看openMax
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                             valueName, maxL, valueName, value));
                     }
                     return value;
@@ -130,41 +130,41 @@ namespace DemoXmlFileHelper
                     if (minUL < maxUL)
                     {
                         throw new ParaListException(
-                            string.Format("when judging the {0} variable range, the error appears: min={1} > max={2}",
+                            string.Format("When judging the {0} variable range, the error appears: min={1} > max={2}",
                             valueName, minUL, maxUL));
                     }
                     if (leftUL < 0) // 值小于最小值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
                                 valueName, minUL, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                                 valueName, minUL, valueName, value));
                     }
                     else if ((openMin && leftUL == 0)) // 值等于于最小值，默认不报错，看openMin
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                             valueName, minUL, valueName, value));
                     }
                     else if (rightUL > 0) // 值大于最大值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxUL, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxUL, valueName, value));
                     }
                     else if (openMax && rightUL == 0) // 值等于于最大值，默认不报错，看openMax
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                             valueName, maxUL, valueName, value));
                     }
                     return value;
@@ -178,41 +178,41 @@ namespace DemoXmlFileHelper
                     if (minD < maxD)
                     {
                         throw new ParaListException(
-                            string.Format("when judging the {0} variable range, the error appears: min={1} > max={2}",
+                            string.Format("When judging the {0} variable range, the error appears: min={1} > max={2}",
                             valueName, minD, maxD));
                     }
                     if (Math.Abs(leftD) < Double.Epsilon) // 值小于最小值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
                                 valueName, minD, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                                 valueName, minD, valueName, value));
                     }
                     else if (openMin && Math.Abs(leftD) < Double.Epsilon) // 值等于于最小值，默认不报错，看openMin
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                             valueName, minD, valueName, value));
                     }
                     else if (Math.Abs(rightD) < Double.Epsilon) // 值大于最大值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxD, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxD, valueName, value));
                     }
                     else if (openMax && Math.Abs(rightD) < Double.Epsilon) // 值等于于最大值，默认不报错，看openMax
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                             valueName, maxD, valueName, value));
                     }
                     return value;
@@ -225,41 +225,41 @@ namespace DemoXmlFileHelper
                     if (minM < maxM)
                     {
                         throw new ParaListException(
-                            string.Format("when judging the {0} variable range, the error appears: min={1} > max={2}",
+                            string.Format("When judging the {0} variable range, the error appears: min={1} > max={2}",
                             valueName, minM, maxM));
                     }
                     if (Math.Abs(leftM) < (Decimal)Double.Epsilon) // 值小于最小值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than or equal to the minimum {1}, but now {2} = {3}",
                                 valueName, minM, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                                 valueName, minM, valueName, value));
                     }
                     else if (openMin && Math.Abs(leftM) < (Decimal)Double.Epsilon) // 值等于于最小值，默认不报错，看openMin
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be greater than the minimum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be greater than the minimum {1}, but now {2} = {3}",
                             valueName, minM, valueName, value));
                     }
                     else if (Math.Abs(rightM) < (Decimal)Double.Epsilon) // 值大于最大值
                     {
                         if (!openMin)
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxM, valueName, value));
                         else
                             throw new ParaListException(
-                                string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                                string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                                 valueName, maxM, valueName, value));
                     }
                     else if (openMax && Math.Abs(rightM) < (Decimal)Double.Epsilon) // 值等于于最大值，默认不报错，看openMax
                     {
                         throw new ParaListException(
-                            string.Format("the {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
+                            string.Format("The {0} variable should be less than or equal to the maximum {1}, but now {2} = {3}",
                             valueName, maxM, valueName, value));
                     }
                     return value;
@@ -281,42 +281,42 @@ namespace DemoXmlFileHelper
         /// <param name="paras"></param>
         /// <param name="key"></param>
         /// <returns></returns>
-        public static T GetParaValue<T>(Dictionary<string, Parameter<object>> paras, string key)
+        public static T GetParaValue<T>(Dictionary<string, object> paras, string key)
         {
             if (!paras.ContainsKey(key))
                 throw new ParaListException(
-                    string.Format("there is not the parameter {0} in the parameter list.", key));
+                    string.Format("There is not the parameter {0} in the parameter list.", key));
             try
             {
                 if (!typeof(T).IsValueType)
                 {
                     if (typeof(T).Equals(typeof(string)))
-                        return (T)paras[key].Value;
+                        return (T)paras[key];
                 }
                 else if (typeof(T).IsValueType)
                 {
                     if (typeof(T).Equals(typeof(int)))
-                        return (T)(object)int.Parse(paras[key].Value.ToString());
+                        return (T)(object)int.Parse(paras[key].ToString());
                     if (typeof(T).Equals(typeof(long)))
-                        return (T)(object)long.Parse(paras[key].Value.ToString());
+                        return (T)(object)long.Parse(paras[key].ToString());
                     if (typeof(T).Equals(typeof(short)))
-                        return (T)(object)short.Parse(paras[key].Value.ToString());
+                        return (T)(object)short.Parse(paras[key].ToString());
                     if (typeof(T).Equals(typeof(byte)))
-                        return (T)(object)byte.Parse(paras[key].Value.ToString());
+                        return (T)(object)byte.Parse(paras[key].ToString());
                     if (typeof(T).Equals(typeof(bool)))
-                        return (T)(object)bool.Parse(paras[key].Value.ToString());
+                        return (T)(object)bool.Parse(paras[key].ToString());
                     if (typeof(T).Equals(typeof(float)))
-                        return (T)(object)float.Parse(paras[key].Value.ToString());
+                        return (T)(object)float.Parse(paras[key].ToString());
                     if (typeof(T).Equals(typeof(double)))
-                        return (T)(object)double.Parse(paras[key].Value.ToString());
+                        return (T)(object)double.Parse(paras[key].ToString());
                     throw new ParaListException("Unexpected type for Utils.GetParaValue<T>.");
                 }
-                return (T)paras[key].Value;
+                return (T)paras[key];
             }
             catch (Exception ex)
             {
-                Log.PrintLog(LogMsgType.Normal, "para[{0}] search failure.\r\n{1}", key, ex.ToString());
-                throw new ParaListException(string.Format("para[{0}] search failure.\r\n{1}", key, ex.ToString()));
+                Log.PrintLog(LogMsgType.Normal, "Para[{0}] search failure.\r\n{1}", key, ex.ToString());
+                throw new ParaListException(string.Format("Para[{0}] search failure.\r\n{1}", key, ex.ToString()));
             }
         }
 
@@ -334,7 +334,8 @@ namespace DemoXmlFileHelper
                 }
                 else
                 {
-                    Parameter<object> para = null;
+                    string key;
+                    object value;
                     NodeStyle DisplayStyle = ReadXmlValue<NodeStyle>(nd, "DisplayStyle");
                     switch (DisplayStyle)
                     {
@@ -342,20 +343,17 @@ namespace DemoXmlFileHelper
                         case NodeStyle.FileSelect:
                         case NodeStyle.TextBox:
                         case NodeStyle.NoDisplay:
-                            para = new Parameter<object>();
-                            para.Name = nd.Name;
-                            para.Value = ReadXmlValue<string>(nd, "Value");
-                            AddPara(paraList, para.Name, para);
+                            key = nd.Name;
+                            value = ReadXmlValue<string>(nd, "Value");
+                            AddPara(ParaList, key, value);
                             break;
                         case NodeStyle.FrequencyList:
-                            para = new Parameter<object>();
-                            para.Name = nd.Name;
-                            para.Value = ReadXmlValue<string>(nd, "Value");
-                            AddPara(paraList, para.Name, para);
-
-                            Parameter<object> segm = new Parameter<object>();
+                            key = nd.Name;
+                            value = ReadXmlValue<string>(nd, "Value");
+                            AddPara(ParaList, key, value);
+                            
                             XmlNode child = nd.ChildNodes[0];
-                            segm.Name = child.Name;
+                            key = child.Name;
                             List<FreqBlock> linear = new List<FreqBlock>();
                             foreach (XmlNode ndTemp in child.ChildNodes)
                             {
@@ -366,12 +364,11 @@ namespace DemoXmlFileHelper
                                 fb.Step = ReadXmlValue<double>(ndTemp, "Step");
                                 linear.Add(fb);
                             }
-                            segm.Value = linear;
-                            AddPara(paraList, segm.Name, segm);
-
-                            Parameter<object> lt = new Parameter<object>();
+                            value = linear;
+                            AddPara(ParaList, key, value);
+                            
                             child = nd.ChildNodes[1];
-                            lt.Name = child.Name;
+                            key = child.Name;
                             List<FreqBlock> list = new List<FreqBlock>();
                             foreach (XmlNode ndTemp in child.ChildNodes)
                             {
@@ -379,17 +376,14 @@ namespace DemoXmlFileHelper
                                 fb.Start = ReadXmlValue<double>(ndTemp, "Value");
                                 list.Add(fb);
                             }
-                            lt.Value = list;
-                            AddPara(paraList, lt.Name, lt);
-
-                            Parameter<object> cw = new Parameter<object>();
+                            value = list;
+                            AddPara(ParaList, key, value);
+                            
                             child = nd.ChildNodes[2];
-                            cw.Name = child.Name;
+                            key = child.Name;
                             if (child.HasChildNodes)
-                                cw.Value = ReadXmlValue<double>(child.ChildNodes[0], "Value");
-                            else
-                                cw.Value = 100;
-                            AddPara(paraList, cw.Name, cw);
+                                value = ReadXmlValue<double>(child.ChildNodes[0], "Value");
+                            AddPara(ParaList, key, value);
                             break;
                         default:
                             break;
@@ -443,7 +437,7 @@ namespace DemoXmlFileHelper
             }
             catch (FormatException)
             {
-                throw new FormatException(string.Format("the value in the {0} node is not in the correct format in xml", key));
+                throw new FormatException(string.Format("The value in the {0} node is not in the correct format in xml", key));
             }
             catch (Exception ex)
             {
@@ -459,11 +453,12 @@ namespace DemoXmlFileHelper
         /// <param name="key"></param>
         /// <param name="add"></param>
         /// <returns></returns>
-        private static bool AddPara(Dictionary<string, Parameter<object>> paras, string key, Parameter<object> add)
+        private static bool AddPara(Dictionary<string, object> paras, string key, object add)
         {
             if (paras.ContainsKey(key))
                 throw new ParaListException(
-                    string.Format("There is no parameter {0} in the parameter list {1}", nameof(paras), key));
+                    string.Format("A parameter {0} already exists in the parameter list {1}. " +
+                    "Please do not submit the same key {3} repeatedly.", key, nameof(paras), key));
             paras.Add(key, add);
             return true;
         }
